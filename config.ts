@@ -1,0 +1,1 @@
+export const DB_URI = "mongodb+srv://hau20050822:Hau22082005%40%21@cluster0.deyhofj.mongodb.net/?appName=Cluster0";

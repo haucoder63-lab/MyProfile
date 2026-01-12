@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "../ui/button";
 import Image from "next/image";
-import { FaSearch, FaUser, FaSignOutAlt, FaUserShield, FaCog } from "react-icons/fa";
+import { FaSearch, FaUser, FaSignOutAlt, FaUserShield, FaCog, FaBars, FaTimes } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -95,7 +95,7 @@ export default function Header() {
 
     const handleLogout = async () => {
         try {
-            await logout();
+            logout();
             toast.success('Đăng xuất thành công!');
             setIsUserMenuOpen(false);
             router.push('/');
@@ -105,39 +105,100 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
+            <div className="max-w-screen-2xl mx-auto px-6">
                 <div className="flex justify-between items-center py-4">
                     <div className="flex items-center">
-                        <Link href="/" className="text-2xl font-semibold text-gray-900 hover:text-blue-600 transition-colors no-underline">
-                            <Image src={'/image/Logo.png'} alt="logo" width={'150'} height={'150'}
+                        <Link 
+                            href="/" 
+                            className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
                             style={{
-                                border: 'none',
-                                borderRadius: '50%'
+                                textDecoration: 'none'
                             }}
-                            />
+                        >
+                            <div className="relative w-16 h-16 overflow-hidden">
+                                <Image 
+                                    src="/image/Logo.png" 
+                                    alt="Logo" 
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="hidden sm:block">
+                                <h1 
+                                    className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '25px',
+                                        fontWeight: '700',
+                                        textDecoration: 'none'
+                                    }}
+                                >
+                                    Lê Hậu
+                                </h1>
+                            </div>
                         </Link>
                     </div>
                     
-                    <nav className="hidden md:flex space-x-8">
-                        <Link href="/" className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors no-underline">
-                            TRANG CHỦ
+                    <nav className="hidden lg:flex items-center space-x-8">
+                        <Link 
+                            href="/" 
+                            className="relative text-gray-700 hover:text-blue-600 transition-colors font-medium group"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            Trang Chủ
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
-                        <Link href="/about" className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors no-underline">
-                            GIỚI THIỆU
+                        <Link 
+                            href="/about" 
+                            className="relative text-gray-700 hover:text-blue-600 transition-colors font-medium group"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            Giới Thiệu
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
-                        <Link href="/education" className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors no-underline">
-                           HỌC VẤN
+                        <Link 
+                            href="/education" 
+                            className="relative text-gray-700 hover:text-blue-600 transition-colors font-medium group"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            Học Vấn
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
-                        <Link href="/contact" className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors no-underline">
-                            LIÊN HỆ
+                        <Link 
+                            href="/contact" 
+                            className="relative text-gray-700 hover:text-blue-600 transition-colors font-medium group"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            Liên Hệ
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
                     </nav>
 
-                    <div className="hidden md:flex items-center space-x-4 relative">
+                    <div className="flex items-center space-x-3">
                         <Button
                             onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="p-2 text-gray-600 hover:text-blue-600 transition-colors bg-transparent"
+                            className="p-2.5 bg-transparent text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-300"
                         >
                             <FaSearch size={18} />
                         </Button>
@@ -146,90 +207,109 @@ export default function Header() {
                             <div className="relative">
                                 <button
                                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                                    className="flex items-center space-x-2 p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                                    className="flex items-center space-x-2 p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-300"
                                 >
-                                    {user?.role === 'admin' ? (
-                                        <FaUserShield size={18} />
-                                    ) : (
-                                        <FaUser size={18} />
-                                    )}
-                                    <span className="text-sm font-medium">{user?.fullname}</span>
+                                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                        {user?.fullname?.charAt(7).toUpperCase()}
+                                    </div>
+                                    <span 
+                                        className="hidden md:block text-sm font-medium"
+                                        style={{
+                                            fontFamily: 'Roboto',
+                                            fontSize: '15px',
+                                            fontWeight: '500'
+                                        }}
+                                    >
+                                        {user?.fullname}
+                                    </span>
                                 </button>
 
                                 {isUserMenuOpen && (
-                                    <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                                    <div className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-2xl shadow-xl z-50">
                                         <div className="p-4 border-b border-gray-100">
-                                            <p className="text-sm font-medium text-gray-900"
-                                            style={{
-                                                fontFamily: 'Roboto',
-                                                fontSize: '18px',
-                                                fontWeight: '500',
-                                                fontStyle: 'normal'
-                                            }}
-                                            >{user?.fullname}</p>
-                                            <p className="text-xs text-gray-500" style={{
-                                                fontFamily: 'Roboto',
-                                                fontSize: '14px',
-                                                fontWeight: '500',
-                                                fontStyle: 'italic'
-                                            }}>{user?.email}</p>
-                                            <span 
-                                            style={{
-                                                fontFamily: 'Roboto',
-                                                fontSize: '14px',
-                                                fontWeight: '500',
-                                                fontStyle: 'normal'
-                                            }}
-                                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
-                                                user?.role === 'admin' 
-                                                    ? 'bg-red-100 text-red-800' 
-                                                    : 'bg-green-100 text-green-800'
-                                            }`}>
-                                                {user?.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}
-                                            </span>
+                                            <div className="flex items-center space-x-3">
+                                                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                                    {user?.fullname?.charAt(7).toUpperCase()}
+                                                </div>
+                                                <div>
+                                                    <p 
+                                                        className="font-semibold text-gray-900"
+                                                        style={{
+                                                            fontFamily: 'Roboto',
+                                                            fontSize: '16px',
+                                                            fontWeight: '600'
+                                                        }}
+                                                    >
+                                                        {user?.fullname}
+                                                    </p>
+                                                    <p 
+                                                        className="text-gray-500 text-sm"
+                                                        style={{
+                                                            fontFamily: 'Roboto',
+                                                            fontSize: '14px',
+                                                            fontWeight: '400'
+                                                        }}
+                                                    >
+                                                        {user?.email}
+                                                    </p>
+                                                    <span 
+                                                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-1 ${
+                                                            user?.role === 'admin' 
+                                                                ? 'bg-red-100 text-red-700' 
+                                                                : 'bg-green-100 text-green-700'
+                                                        }`}
+                                                        style={{
+                                                            fontFamily: 'Roboto',
+                                                            fontSize: '12px',
+                                                            fontWeight: '500'
+                                                        }}
+                                                    >
+                                                        {user?.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="p-2">
                                             <Link
-                                               style={{
-                                                textDecoration: 'none',
-                                                fontFamily: 'Roboto',
-                                                fontSize: '16px',
-                                                fontStyle: 'normal'
-                                               }}
                                                 href="/profile"
-                                                className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                                                className="flex items-center px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all duration-300"
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: '15px',
+                                                    fontWeight: '500'
+                                                }}
                                                 onClick={() => setIsUserMenuOpen(false)}
                                             >
-                                                <FaUser className="mr-2" size={14} />
+                                                <FaUser className="mr-3 text-blue-500" size={16} />
                                                 Hồ sơ cá nhân
                                             </Link>
                                             {user?.role === 'admin' && (
                                                 <Link
-                                                style={{
-                                                textDecoration: 'none',
-                                                fontFamily: 'Roboto',
-                                                fontSize: '16px',
-                                                fontStyle: 'normal'
-                                               }}
                                                     href="/admin"
-                                                    className="flex items-center px-3 py-2 text-sm text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+                                                    className="flex items-center px-3 py-2.5 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl transition-all duration-300"
+                                                    style={{
+                                                        textDecoration: 'none',
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: '15px',
+                                                        fontWeight: '500'
+                                                    }}
                                                     onClick={() => setIsUserMenuOpen(false)}
                                                 >
-                                                    <FaCog className="mr-2" size={14} />
+                                                    <FaCog className="mr-3 text-purple-500" size={16} />
                                                     Trang quản trị
                                                 </Link>
                                             )}
                                             <button
                                                 onClick={handleLogout}
+                                                className="w-full flex items-center px-3 py-2.5 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-300"
                                                 style={{
-                                                textDecoration: 'none',
-                                                fontFamily: 'Roboto',
-                                                fontSize: '16px',
-                                                fontStyle: 'normal'
-                                               }}
-                                                className="w-full flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: '15px',
+                                                    fontWeight: '500'
+                                                }}
                                             >
-                                                <FaSignOutAlt className="mr-2" size={14} />
+                                                <FaSignOutAlt className="mr-3 text-red-500" size={16} />
                                                 Đăng xuất
                                             </button>
                                         </div>
@@ -239,122 +319,197 @@ export default function Header() {
                         ) : (
                             <Link
                                 href="/login"
-                                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors bg-transparent"
+                                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                                style={{
+                                    textDecoration: 'none',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '15px',
+                                    fontWeight: '500'
+                                }}
                             >
-                                <FaUser size={16} color="black" />
+                                <FaUser size={16} />
+                                <span className="hidden sm:block">Đăng nhập</span>
                             </Link>
                         )}
                         
-                        {isSearchOpen && (
-                            <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                                <form onSubmit={handleSearch} className="p-4">
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full px-4 py-2 pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            autoFocus
-                                        />
-                                        <Button
-                                            type="submit"
-                                            className="bg-transparent absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
-                                        >
-                                            <FaSearch size={16} />
-                                        </Button>
-                                    </div>
-                                </form>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                        <Button
-                            onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="bg-transparent md:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors"
-                        >
-                            <FaSearch size={18} />
-                        </Button>
-                        
-                        <Button
-                            className="md:hidden bg-transparent flex items-center px-3 py-2 border rounded-md text-gray-500 border-none hover:text-gray-900 hover:border-gray-400 transition-colors"
+                        <button
+                            className="lg:hidden p-2.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-300"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
-                            <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
-                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-                            </svg>
-                        </Button>
+                            {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+                        </button>
                     </div>
                 </div>
 
+                {isSearchOpen && (
+                    <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg z-40">
+                        <div className="max-w-screen-2xl mx-auto px-6 py-4">
+                            <form onSubmit={handleSearch} className="relative max-w-md mx-auto">
+                                <input
+                                    type="text"
+                                    placeholder="Tìm kiếm..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full px-4 py-3 pr-12 text-gray-700 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '15px'
+                                    }}
+                                    autoFocus
+                                />
+                                <Button
+                                    type="submit"
+                                    className="absolute bg-transparent right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-blue-600 transition-colors rounded-full hover:bg-blue-50"
+                                >
+                                    <FaSearch size={16} />
+                                </Button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
                 {isMenuOpen && (
-                    <div className="md:hidden border-t border-gray-100">
-                        <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-50">
-                            <Link href="/" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
-                                TRANG CHỦ
+                    <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg z-40">
+                        <div className="px-6 py-4 space-y-2">
+                            <Link 
+                                href="/" 
+                                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium"
+                                style={{
+                                    textDecoration: 'none',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '16px',
+                                    fontWeight: '500'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Trang Chủ
                             </Link>
-                            <Link href="/about" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
-                                GIỚI THIỆU
+                            <Link 
+                                href="/about" 
+                                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium"
+                                style={{
+                                    textDecoration: 'none',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '16px',
+                                    fontWeight: '500'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Giới Thiệu
                             </Link>
-                            <Link href="/education" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
-                                HỌC VẤN
+                            <Link 
+                                href="/education" 
+                                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium"
+                                style={{
+                                    textDecoration: 'none',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '16px',
+                                    fontWeight: '500'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Học Vấn
                             </Link>
-                            <Link href="/contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
-                                LIÊN HỆ
+                            <Link 
+                                href="/contact" 
+                                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium"
+                                style={{
+                                    textDecoration: 'none',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '16px',
+                                    fontWeight: '500'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Liên Hệ
                             </Link>
                             
                             {isAuthenticated ? (
-                                <div className="border-t border-gray-200 pt-2 mt-2">
-                                    <div className="px-3 py-2">
-                                        <p className="text-sm font-medium text-gray-900">{user?.fullname}</p>
-                                        <p className="text-xs text-gray-500">{user?.email}</p>
+                                <div className="border-t border-gray-200 pt-4 mt-4">
+                                    <div className="flex items-center space-x-3 px-4 py-3">
+                                        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                            {user?.fullname?.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <p 
+                                                className="font-semibold text-gray-900"
+                                                style={{
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: '15px',
+                                                    fontWeight: '600'
+                                                }}
+                                            >
+                                                {user?.fullname}
+                                            </p>
+                                            <p 
+                                                className="text-gray-500 text-sm"
+                                                style={{
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: '13px',
+                                                    fontWeight: '400'
+                                                }}
+                                            >
+                                                {user?.email}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <Link href="/profile" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
+                                    <Link 
+                                        href="/profile" 
+                                        className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 font-medium"
+                                        style={{
+                                            textDecoration: 'none',
+                                            fontFamily: 'Roboto',
+                                            fontSize: '15px',
+                                            fontWeight: '500'
+                                        }}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
                                         Hồ sơ cá nhân
                                     </Link>
                                     {user?.role === 'admin' && (
-                                        <Link href="/admin" className="block px-3 py-2 text-base font-medium text-blue-700 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors no-underline">
+                                        <Link 
+                                            href="/admin" 
+                                            className="block px-4 py-3 text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-all duration-300 font-medium"
+                                            style={{
+                                                textDecoration: 'none',
+                                                fontFamily: 'Roboto',
+                                                fontSize: '15px',
+                                                fontWeight: '500'
+                                            }}
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
                                             Trang quản trị
                                         </Link>
                                     )}
                                     <button
                                         onClick={handleLogout}
-                                        className="w-full text-left block px-3 py-2 text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+                                        className="w-full text-left block px-4 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all duration-300 font-medium"
+                                        style={{
+                                            fontFamily: 'Roboto',
+                                            fontSize: '15px',
+                                            fontWeight: '500'
+                                        }}
                                     >
                                         Đăng xuất
                                     </button>
                                 </div>
                             ) : (
-                                <div className="border-t border-gray-200 pt-2 mt-2">
-                                    <Link href="/login" className="block px-3 py-2 text-base font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors no-underline">
+                                <div className="border-t border-gray-200 pt-4 mt-4">
+                                    <Link 
+                                        href="/login" 
+                                        className="block px-4 py-3 text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 font-medium"
+                                        style={{
+                                            textDecoration: 'none',
+                                            fontFamily: 'Roboto',
+                                            fontSize: '16px',
+                                            fontWeight: '500'
+                                        }}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
                                         Đăng nhập
                                     </Link>
                                 </div>
                             )}
-                        </div>
-                    </div>
-                )}
-
-                {isSearchOpen && (
-                    <div className="md:hidden border-t border-gray-100 bg-white">
-                        <div className="p-4">
-                            <form onSubmit={handleSearch} className="relative">
-                                <input
-                                    type="text"
-                                    placeholder="Search..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full px-4 py-2 pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    autoFocus
-                                />
-                                        <Button
-                                            type="submit"
-                                            className="bg-transparent absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
-                                        >
-                                            <FaSearch size={16} />
-                                        </Button>
-                            </form>
                         </div>
                     </div>
                 )}

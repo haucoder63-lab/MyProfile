@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { FaGraduationCap, FaTrophy, FaCertificate, FaUsers } from "react-icons/fa";
 
 interface Achievement {
     date: string;
@@ -34,9 +35,26 @@ interface Education {
 export default function Education() {
     const [educations, setEducations] = useState<Education[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         fetchEducations();
+        
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => observer.disconnect();
     }, []);
 
     const fetchEducations = async () => {

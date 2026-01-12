@@ -62,7 +62,7 @@ export default function Education() {
     }
 
     return (
-        <div className="bg-white py-2">
+        <div className="bg-white py-4">
             <div className="max-w-screen-2xl mx-auto px-6">
                 <div className="text-center mb-2">
                     <h2 className="text-3xl font-medium text-gray-900 mb-3" 

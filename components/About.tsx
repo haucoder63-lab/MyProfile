@@ -44,9 +44,9 @@ export default function About() {
     }
 
     return (
-        <div className="bg-gray-50 py-2">
+        <div className="bg-gray-50 py-1">
             <div className="max-w-screen-2xl mx-auto px-6">
-                <div className="text-center mb-2">
+                <div className="text-center mb-1">
                     <h2 className="text-3xl font-medium text-gray-900 mb-3" 
                     style={{
                         fontFamily: 'Roboto',
@@ -68,8 +68,8 @@ export default function About() {
                 </div>
 
                 {about.map((item) => (
-                    <div key={item._id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-2">
-                        <div className="mb-4">
+                    <div key={item._id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 mb-1">
+                        <div className="mb-3">
                             <h3 className="text-2xl font-semibold text-gray-900 mb-2"
                             style={{
                                 fontFamily: 'Roboto',
@@ -89,7 +89,7 @@ export default function About() {
                             >{item.description}</p>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                             <div>
                                 <h4 className="text-lg font-semibold text-gray-800 mb-2 flex items-center"
                                 style={{
@@ -102,7 +102,7 @@ export default function About() {
                                     <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
                                     Mục Tiêu
                                 </h4>
-                                <ul className="space-y-2">
+                                <ul className="space-y-1">
                                     {item.objectives.map((objective, index) => (
                                         <li key={index} className="flex items-start">
                                             <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -131,7 +131,7 @@ export default function About() {
                                     <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
                                     Kỹ Năng Tập Trung
                                 </h4>
-                                <ul className="space-y-2">
+                                <ul className="space-y-1">
                                     {item.skills_focus.map((skill, index) => (
                                         <li key={index} className="flex items-start">
                                             <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -160,7 +160,7 @@ export default function About() {
                                     <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
                                     Mục Tiêu Nghề Nghiệp
                                 </h4>
-                                <ul className="space-y-2">
+                                <ul className="space-y-1">
                                     {item.career_goals.map((goal, index) => (
                                         <li key={index} className="flex items-start">
                                             <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>

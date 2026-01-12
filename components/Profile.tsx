@@ -72,8 +72,15 @@ export default function Profile() {
                                     />
                                 ) : (
                                     <div className="w-32 h-32 rounded-full mx-auto mb-4 bg-blue-500 flex items-center justify-center">
-                                        <span className="text-3xl text-white font-semibold">
-                                            {profile.fullname.charAt(0).toUpperCase()}
+                                        <span className="text-3xl text-white font-semibold" 
+                                        style={{
+                                            fontFamily: 'Roboto',
+                                            fontSize: '30px',
+                                            fontWeight: 'bolder',
+                                            fontStyle: 'normal'
+                                        }}
+                                        >
+                                            {profile.fullname.charAt(7).toUpperCase()}
                                         </span>
                                     </div>
                                 )}

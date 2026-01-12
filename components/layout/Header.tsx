@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +14,12 @@ export default function Header() {
                 <div className="flex justify-between items-center py-4">
                     <div className="flex items-center">
                         <Link href="/" className="text-2xl font-semibold text-gray-900 hover:text-blue-600 transition-colors no-underline">
-                            Lê Hậu
+                            <Image src={'/image/Lê hậu.png'} alt="logo" width={'150'} height={'150'}
+                            style={{
+                                border: 'none',
+                                borderRadius: '50%'
+                            }}
+                            />
                         </Link>
                     </div>
                     

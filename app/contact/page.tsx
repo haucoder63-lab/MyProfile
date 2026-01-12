@@ -1,10 +1,9 @@
-"use client";
+import Contact from "@/components/Contact";
 
-
-export default function Page() {
-    return(
-        <>
-        Liên Hệ
-        </>
-    )
+export default function ContactPage() {
+  return (
+    <div className="">
+      <Contact />
+    </div>
+  );
 }

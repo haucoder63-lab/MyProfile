@@ -35,6 +35,10 @@ const UserModel = new mongoose.Schema({
         type: String,
         default: "",
     },
+    specialization: {
+        type: String,
+        default: "",
+    },
     avatar_url: {
         type: String,
         default: "",

@@ -10,6 +10,7 @@ interface UserProfile {
     email: string;
     phone: string;
     address: string;
+    specialization: string;
     avatar_url: string;
     createdAt: string;
 }
@@ -92,6 +93,16 @@ export default function Profile() {
                                   fontSize: '20px'
                                 }}
                                 >{profile.fullname}</h3>
+                                {profile.specialization && (
+                                    <p className="text-sm text-blue-600 font-medium"
+                                    style={{
+                                      fontFamily: 'Roboto',
+                                      fontStyle: 'normal',
+                                      fontWeight: '500',
+                                      fontSize: '16px'
+                                    }}
+                                    >{profile.specialization}</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -159,6 +170,25 @@ export default function Profile() {
                                     </div>
                                 </div>
                                 <div className="space-y-6">
+                                    <div>
+                                        <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2"
+                                         style={{
+                                          fontFamily: 'Roboto',
+                                          fontSize: '17px',
+                                          fontWeight: '600',
+                                          fontStyle: 'normal'
+                                        }}
+                                        >Chuyên Nghành</h4>
+                                        <p className="text-lg font-medium text-gray-900"
+                                        style={{
+                                          fontFamily: 'Roboto',
+                                          fontSize: '18px',
+                                          fontStyle: 'normal',
+                                          fontWeight: '400'
+                                        }}
+                                        >{profile.specialization || 'Chưa cập nhật'}</p>
+                                        <hr className="my-4 border-gray-200"/>
+                                    </div>
                                     <div>
                                         <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2"
                                          style={{

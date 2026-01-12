@@ -46,6 +46,7 @@ export default function Skills() {
             case 'Front-end': return 'bg-blue-500';
             case 'Back-end': return 'bg-green-500';
             case 'Database': return 'bg-purple-500';
+            case 'OTHER SKILLS': return 'bg-cyan-500';
             default: return 'bg-gray-500';
         }
     };

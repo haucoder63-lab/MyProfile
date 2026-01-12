@@ -18,6 +18,266 @@ interface User {
     createdAt: string;
 }
 
+interface UserEditFormProps {
+    user: User;
+    onSave: (user: User) => void;
+    onCancel: () => void;
+}
+
+function UserEditForm({ user, onSave, onCancel }: UserEditFormProps) {
+    const [formData, setFormData] = useState({
+        fullname: user.fullname,
+        email: user.email,
+        phone: user.phone || '',
+        address: user.address || '',
+        specialization: user.specialization || '',
+        role: user.role
+    });
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const response = await fetch(`/api/user/${user._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                onSave(updatedUser);
+            } else {
+                const error = await response.json();
+                toast.error(error.error || 'Lỗi khi cập nhật người dùng');
+            }
+        } catch (error) {
+            toast.error('Lỗi khi cập nhật người dùng');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
+                <input
+                    type="text"
+                    value={formData.fullname}
+                    onChange={(e) => setFormData({...formData, fullname: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                <input
+                    type="text"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
+                <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Chuyên ngành</label>
+                <input
+                    type="text"
+                    value={formData.specialization}
+                    onChange={(e) => setFormData({...formData, specialization: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Vai trò</label>
+                <select
+                    value={formData.role}
+                    onChange={(e) => setFormData({...formData, role: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="user">Người dùng</option>
+                    <option value="admin">Quản trị viên</option>
+                </select>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+                <button
+                    type="button"
+                    onClick={onCancel}
+                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                    Hủy
+                </button>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                >
+                    {loading ? 'Đang lưu...' : 'Lưu'}
+                </button>
+            </div>
+        </form>
+    );
+}
+
+interface UserCreateFormProps {
+    onSave: (user: User) => void;
+    onCancel: () => void;
+}
+
+function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
+    const [formData, setFormData] = useState({
+        fullname: '',
+        email: '',
+        password: '',
+        phone: '',
+        address: '',
+        specialization: '',
+        role: 'user'
+    });
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const response = await fetch('/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const newUser = await response.json();
+                onSave(newUser);
+            } else {
+                const error = await response.json();
+                toast.error(error.error || 'Lỗi khi tạo người dùng');
+            }
+        } catch (error) {
+            toast.error('Lỗi khi tạo người dùng');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
+                <input
+                    type="text"
+                    value={formData.fullname}
+                    onChange={(e) => setFormData({...formData, fullname: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                <input
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                <input
+                    type="text"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
+                <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Chuyên ngành</label>
+                <input
+                    type="text"
+                    value={formData.specialization}
+                    onChange={(e) => setFormData({...formData, specialization: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Vai trò</label>
+                <select
+                    value={formData.role}
+                    onChange={(e) => setFormData({...formData, role: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="user">Người dùng</option>
+                    <option value="admin">Quản trị viên</option>
+                </select>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+                <button
+                    type="button"
+                    onClick={onCancel}
+                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                    Hủy
+                </button>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                >
+                    {loading ? 'Đang tạo...' : 'Tạo'}
+                </button>
+            </div>
+        </form>
+    );
+}
+
 export default function UsersManagement() {
     const { user, isAuthenticated, loading } = useAuth();
     const router = useRouter();
@@ -234,7 +494,7 @@ export default function UsersManagement() {
 
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <h3 className="text-lg font-semibold mb-4">
                             {modalMode === 'view' && 'Chi Tiết Người Dùng'}
                             {modalMode === 'edit' && 'Chỉnh Sửa Người Dùng'}
@@ -270,14 +530,39 @@ export default function UsersManagement() {
                             </div>
                         )}
 
-                        <div className="flex justify-end space-x-3 mt-6">
-                            <button
-                                onClick={() => setIsModalOpen(false)}
-                                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                            >
-                                Đóng
-                            </button>
-                        </div>
+                        {modalMode === 'edit' && selectedUser && (
+                            <UserEditForm 
+                                user={selectedUser}
+                                onSave={(updatedUser) => {
+                                    setUsers(users.map(u => u._id === updatedUser._id ? updatedUser : u));
+                                    setIsModalOpen(false);
+                                    toast.success('Cập nhật người dùng thành công');
+                                }}
+                                onCancel={() => setIsModalOpen(false)}
+                            />
+                        )}
+
+                        {modalMode === 'create' && (
+                            <UserCreateForm 
+                                onSave={(newUser) => {
+                                    setUsers([...users, newUser]);
+                                    setIsModalOpen(false);
+                                    toast.success('Thêm người dùng thành công');
+                                }}
+                                onCancel={() => setIsModalOpen(false)}
+                            />
+                        )}
+
+                        {modalMode === 'view' && (
+                            <div className="flex justify-end space-x-3 mt-6">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                                >
+                                    Đóng
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

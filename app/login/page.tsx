@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Page() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { login } = useAuth();
     const router = useRouter();
 
@@ -104,16 +106,26 @@ export default function Page() {
                                         >
                                             Mật khẩu
                                         </label>
-                                        <input
-                                            id="password"
-                                            type="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                            placeholder="Nhập mật khẩu của bạn"
-                                            required
-                                            disabled={isLoading}
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                id="password"
+                                                type={showPassword ? "text" : "password"}
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                                placeholder="Nhập mật khẩu của bạn"
+                                                required
+                                                disabled={isLoading}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                                disabled={isLoading}
+                                            >
+                                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <button
@@ -151,7 +163,7 @@ export default function Page() {
                                     fontStyle: 'normal'
                                 }}
                                 >
-                                    Chúng tôi không chỉ là một công ty
+                                    Tôi không chỉ là một lập trình viên
                                 </h3>
                                 <p className="text-blue-100 text-lg leading-relaxed mb-8"   style={{
                                     fontFamily: 'Roboto',
@@ -159,9 +171,9 @@ export default function Page() {
                                     fontWeight: '400',
                                     fontStyle: 'italic'
                                 }}>
-                                    Chúng tôi là đối tác đáng tin cậy trong hành trình phát triển công nghệ của bạn. 
-                                    Với đội ngũ chuyên nghiệp và kinh nghiệm, chúng tôi cam kết mang đến những 
-                                    giải pháp tốt nhất cho doanh nghiệp của bạn.
+                                    Tôi là một developer đam mê công nghệ, luôn sẵn sàng học hỏi và phát triển. 
+                                    Với kiến thức vững chắc về lập trình và khả năng giải quyết vấn đề, 
+                                    tôi mong muốn đóng góp vào sự thành công của doanh nghiệp.
                                 </p>
                                 <div className="space-y-4">
                                     <div className="flex items-center">
@@ -171,7 +183,7 @@ export default function Page() {
                                     fontSize: '17px',
                                     fontWeight: '500',
                                     fontStyle: 'normal'
-                                }}>Giải pháp công nghệ hiện đại</span>
+                                }}>Kỹ năng lập trình đa dạng</span>
                                     </div>
                                     <div className="flex items-center">
                                         <div className="w-2 h-2 bg-blue-300 rounded-full mr-3"></div>
@@ -180,7 +192,7 @@ export default function Page() {
                                     fontSize: '17px',
                                     fontWeight: '500',
                                     fontStyle: 'normal'
-                                }}>Đội ngũ chuyên nghiệp</span>
+                                }}>Tinh thần học hỏi không ngừng</span>
                                     </div>
                                     <div className="flex items-center">
                                         <div className="w-2 h-2 bg-blue-300 rounded-full mr-3"></div>
@@ -189,7 +201,7 @@ export default function Page() {
                                     fontSize: '17px',
                                     fontWeight: '500',
                                     fontStyle: 'normal'
-                                }}>Hỗ trợ 24/7</span>
+                                }}>Sẵn sàng thử thách mới</span>
                                     </div>
                                 </div>
                             </div>

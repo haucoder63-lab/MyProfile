@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import Project from "@/model/Project";
-import { withAuth, withAdmin } from "@/lib/middleware";
 import { getTokenFromRequest, getUserFromToken } from "@/lib/auth";
 
 const CORS_HEADERS = {
@@ -20,24 +19,24 @@ export async function OPTIONS() {
 export const GET = async (request: NextRequest) => {
     try {
         await dbConnect();
-        
-        // Check if user is authenticated
         const token = getTokenFromRequest(request);
         let user = null;
         
         if (token) {
-            user = await getUserFromToken(token);
+            try {
+                user = await getUserFromToken(token);
+            } catch (error) {
+                console.log('Invalid token, proceeding with public access');
+                user = null;
+            }
         }
         
         let projects;
         if (user && user.role === 'admin') {
-            // Admin can see all projects
             projects = await Project.find({}).populate('user_id', 'fullname email').sort({createdAt: -1}).lean().exec();
         } else if (user) {
-            // Authenticated user can see only their own projects
             projects = await Project.find({ user_id: user.id }).populate('user_id', 'fullname email').sort({createdAt: -1}).lean().exec();
         } else {
-            // Public access - show all projects for portfolio viewing
             projects = await Project.find({}).populate('user_id', 'fullname email').sort({createdAt: -1}).lean().exec();
         }
         
@@ -61,9 +60,42 @@ export const GET = async (request: NextRequest) => {
     }
 };
 
-export const POST = withAuth(async (request: NextRequest, user) => {
+export async function POST(request: NextRequest) {
     try {
         await dbConnect();
+        const token = getTokenFromRequest(request);
+        if (!token) {
+            return new NextResponse(JSON.stringify({err: 'Authentication required'}), {
+                status: 401,
+                headers: {
+                    ...CORS_HEADERS,
+                    "Content-Type": "application/json",
+                }
+            });
+        }
+
+        let user;
+        try {
+            user = await getUserFromToken(token);
+            if (!user) {
+                return new NextResponse(JSON.stringify({err: 'Invalid token'}), {
+                    status: 401,
+                    headers: {
+                        ...CORS_HEADERS,
+                        "Content-Type": "application/json",
+                    }
+                });
+            }
+        } catch (error) {
+            return new NextResponse(JSON.stringify({err: 'Invalid token'}), {
+                status: 401,
+                headers: {
+                    ...CORS_HEADERS,
+                    "Content-Type": "application/json",
+                }
+            });
+        }
+
         const body = await request.json();
         const {
             title, 
@@ -85,7 +117,7 @@ export const POST = withAuth(async (request: NextRequest, user) => {
         } = body;
         
         const project = await Project.create({
-            user_id: user.id,
+            user_id: user?.id,
             title,
             description,
             image_url,
@@ -121,4 +153,4 @@ export const POST = withAuth(async (request: NextRequest, user) => {
             }
         });
     }
-});
+}

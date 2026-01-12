@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import User from "@/model/User";
 import bcrypt from "bcryptjs";
-import { withAuth, withAdmin } from "@/lib/middleware";
 import { getTokenFromRequest, getUserFromToken } from "@/lib/auth";
 
 const CORS_HEADERS = {
@@ -25,7 +24,12 @@ export const GET = async (request: NextRequest) => {
         let user = null;
         
         if (token) {
-            user = await getUserFromToken(token);
+            try {
+                user = await getUserFromToken(token);
+            } catch (error) {
+                console.log('Invalid token, proceeding with public access');
+                user = null;
+            }
         }
         
         let users;

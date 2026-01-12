@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { FaSearch, FaUser, FaSignOutAlt, FaUserShield } from "react-icons/fa";
+import { FaSearch, FaUser, FaSignOutAlt, FaUserShield, FaCog } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -17,10 +17,80 @@ export default function Header() {
     const router = useRouter();
     const { user, logout, isAuthenticated } = useAuth();
 
-    const handleSearch = (e: React.FormEvent) => {
+    const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Searching for:", searchQuery);
+        if (!searchQuery.trim()) return;
+        
+        try {
+            const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+            const data = await response.json();
+            
+            if (response.ok && data.results.total > 0) {
+                toast.success(`${data.message}`);
+                
+                const results = data.results;
+                
+                if (results.users.length > 0) {
+                    if (window.location.pathname !== '/') {
+                        router.push('/');
+                        setTimeout(() => {
+                            const element = document.getElementById('profile');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 500);
+                    } else {
+                        const element = document.getElementById('profile');
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                } else if (results.projects.length > 0) {
+                    if (window.location.pathname !== '/') {
+                        router.push('/');
+                        setTimeout(() => {
+                            const element = document.getElementById('projects');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 500);
+                    } else {
+                        const element = document.getElementById('projects');
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                } else if (results.skills.length > 0) {
+                    if (window.location.pathname !== '/') {
+                        router.push('/');
+                        setTimeout(() => {
+                            const element = document.getElementById('skills');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 500);
+                    } else {
+                        const element = document.getElementById('skills');
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                } else if (results.education.length > 0) {
+                    router.push('/education');
+                } else if (results.about.length > 0) {
+                    router.push('/about');
+                } else if (results.contact.length > 0) {
+                    router.push('/contact');
+                }
+            } else {
+                toast.error(data.error || 'Không tìm thấy kết quả nào');
+            }
+        } catch (error) {
+            toast.error('Lỗi kết nối');
+        }
+        
         setIsSearchOpen(false);
+        setSearchQuery('');
     };
 
     const handleLogout = async () => {
@@ -89,9 +159,28 @@ export default function Header() {
                                 {isUserMenuOpen && (
                                     <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                                         <div className="p-4 border-b border-gray-100">
-                                            <p className="text-sm font-medium text-gray-900">{user?.fullname}</p>
-                                            <p className="text-xs text-gray-500">{user?.email}</p>
-                                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
+                                            <p className="text-sm font-medium text-gray-900"
+                                            style={{
+                                                fontFamily: 'Roboto',
+                                                fontSize: '18px',
+                                                fontWeight: '500',
+                                                fontStyle: 'normal'
+                                            }}
+                                            >{user?.fullname}</p>
+                                            <p className="text-xs text-gray-500" style={{
+                                                fontFamily: 'Roboto',
+                                                fontSize: '14px',
+                                                fontWeight: '500',
+                                                fontStyle: 'italic'
+                                            }}>{user?.email}</p>
+                                            <span 
+                                            style={{
+                                                fontFamily: 'Roboto',
+                                                fontSize: '14px',
+                                                fontWeight: '500',
+                                                fontStyle: 'normal'
+                                            }}
+                                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
                                                 user?.role === 'admin' 
                                                     ? 'bg-red-100 text-red-800' 
                                                     : 'bg-green-100 text-green-800'
@@ -101,6 +190,12 @@ export default function Header() {
                                         </div>
                                         <div className="p-2">
                                             <Link
+                                               style={{
+                                                textDecoration: 'none',
+                                                fontFamily: 'Roboto',
+                                                fontSize: '16px',
+                                                fontStyle: 'normal'
+                                               }}
                                                 href="/profile"
                                                 className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
                                                 onClick={() => setIsUserMenuOpen(false)}
@@ -108,8 +203,30 @@ export default function Header() {
                                                 <FaUser className="mr-2" size={14} />
                                                 Hồ sơ cá nhân
                                             </Link>
+                                            {user?.role === 'admin' && (
+                                                <Link
+                                                style={{
+                                                textDecoration: 'none',
+                                                fontFamily: 'Roboto',
+                                                fontSize: '16px',
+                                                fontStyle: 'normal'
+                                               }}
+                                                    href="/admin"
+                                                    className="flex items-center px-3 py-2 text-sm text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+                                                    onClick={() => setIsUserMenuOpen(false)}
+                                                >
+                                                    <FaCog className="mr-2" size={14} />
+                                                    Trang quản trị
+                                                </Link>
+                                            )}
                                             <button
                                                 onClick={handleLogout}
+                                                style={{
+                                                textDecoration: 'none',
+                                                fontFamily: 'Roboto',
+                                                fontSize: '16px',
+                                                fontStyle: 'normal'
+                                               }}
                                                 className="w-full flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
                                             >
                                                 <FaSignOutAlt className="mr-2" size={14} />
@@ -196,6 +313,11 @@ export default function Header() {
                                     <Link href="/profile" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
                                         Hồ sơ cá nhân
                                     </Link>
+                                    {user?.role === 'admin' && (
+                                        <Link href="/admin" className="block px-3 py-2 text-base font-medium text-blue-700 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors no-underline">
+                                            Trang quản trị
+                                        </Link>
+                                    )}
                                     <button
                                         onClick={handleLogout}
                                         className="w-full text-left block px-3 py-2 text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"

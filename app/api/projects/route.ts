@@ -16,14 +16,15 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-    await dbConnect();
     try {
-        const projects = await Project.find({}).populate('user_id', 'fullname email').sort({createdAt: -1});
+        await dbConnect();
+        const projects = await Project.find({}).populate('user_id', 'fullname email').sort({createdAt: -1}).lean().exec();
         return new NextResponse(JSON.stringify(projects), {
             status: 200,
             headers: {
                 ...CORS_HEADERS,
                 "Content-Type": "application/json",
+                "Cache-Control": "s-maxage=60, stale-while-revalidate=300"
             }
         })
 

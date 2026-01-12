@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze": "cross-env ANALYZE=true next build",
+    "build:production": "next build && next export"
   },
   "dependencies": {
     "@coreui/coreui": "^5.5.0",

@@ -26,13 +26,31 @@ export default function Profile() {
 
     const fetchProfile = async () => {
         try {
-            const response = await fetch('/api/user');
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            
+            const response = await fetch('/api/user', {
+                signal: controller.signal,
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const users = await response.json();
             if (users && users.length > 0) {
                 setProfile(users[0]);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error fetching profile:', error);
+            if (error.name === 'AbortError') {
+                console.error('Request timed out');
+            }
         } finally {
             setLoading(false);
         }

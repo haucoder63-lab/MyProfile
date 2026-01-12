@@ -55,15 +55,31 @@ export default function Projects() {
 
     const fetchProjects = async () => {
         try {
-            const response = await fetch('/api/projects');
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            
+            const response = await fetch('/api/projects', {
+                signal: controller.signal,
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
             if (Array.isArray(data)) {
                 setProjects(data);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error fetching projects:', error);
-        } finally {
-          
+            if (error.name === 'AbortError') {
+                console.error('Request timed out');
+            }
         }
     };
 

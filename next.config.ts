@@ -12,8 +12,18 @@ const nextConfig: NextConfig = {
         hostname: '**',
       }
     ],
-    unoptimized: true
-  }
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60,
+  },
+  experimental: {
+    optimizePackageImports: ['react-icons', 'lucide-react'],
+  },
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: false,
+  httpAgentOptions: {
+    keepAlive: true,
+  },
 };
 
 export default nextConfig;

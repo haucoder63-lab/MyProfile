@@ -17,14 +17,15 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-    dbConnect();
     try {
-        const users = await User.find({}).sort({createdAt: -1});
+        await dbConnect();
+        const users = await User.find({}).sort({createdAt: -1}).lean().exec();
         return new NextResponse(JSON.stringify(users), {
             status: 200,
             headers: {
                 ...CORS_HEADERS,
                 "Content-Type": "application/json",
+                "Cache-Control": "s-maxage=60, stale-while-revalidate=300"
             }
         })
 

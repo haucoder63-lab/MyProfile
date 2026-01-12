@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { FaPlus, FaEdit, FaTrash, FaEye, FaSearch } from "react-icons/fa";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 
 interface User {
     _id: string;
@@ -66,8 +67,21 @@ function UserEditForm({ user, onSave, onCancel }: UserEditFormProps) {
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
-                <input
+                <label className="block text-sm font-medium text-gray-700 mb-1"
+                 style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Họ tên</label>
+                <Input
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}
                     type="text"
                     value={formData.fullname}
                     onChange={(e) => setFormData({...formData, fullname: e.target.value})}
@@ -76,9 +90,22 @@ function UserEditForm({ user, onSave, onCancel }: UserEditFormProps) {
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
+                <label className="block text-sm font-medium text-gray-700 mb-1" 
+                style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Email</label>
+                <Input
                     type="email"
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -86,45 +113,109 @@ function UserEditForm({ user, onSave, onCancel }: UserEditFormProps) {
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
-                <input
+                <label className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Số điện thoại</label>
+                <Input
                     type="text"
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
-                <input
+                <label className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Địa chỉ</label>
+                <Input
                     type="text"
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}
                     value={formData.address}
                     onChange={(e) => setFormData({...formData, address: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Chuyên ngành</label>
-                <input
+                <label className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Chuyên ngành</label>
+                <Input
                     type="text"
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}
                     value={formData.specialization}
                     onChange={(e) => setFormData({...formData, specialization: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vai trò</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        fontStyle: 'normal'
+                    }}
+                >Vai trò</label>
                 <select
                     value={formData.role}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    <option value="user">Người dùng</option>
-                    <option value="admin">Quản trị viên</option>
+                    <option value="user" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}>Người dùng</option>
+                    <option value="admin" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}>Quản trị viên</option>
                 </select>
             </div>
-            <div className="flex justify-end space-x-3 mt-6">
+            <div className="flex justify-end space-x-3 mt-6 gap-2">
                 <button
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}
                     type="button"
                     onClick={onCancel}
                     className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -132,6 +223,14 @@ function UserEditForm({ user, onSave, onCancel }: UserEditFormProps) {
                     Hủy
                 </button>
                 <button
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        fontStyle: 'normal',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}
                     type="submit"
                     disabled={loading}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
@@ -192,7 +291,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
-                <input
+                <Input
                     type="text"
                     value={formData.fullname}
                     onChange={(e) => setFormData({...formData, fullname: e.target.value})}
@@ -202,7 +301,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
+                <Input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -212,7 +311,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
-                <input
+                <Input
                     type="password"
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
@@ -222,7 +321,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
-                <input
+                <Input
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
@@ -231,7 +330,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
-                <input
+                <Input
                     type="text"
                     value={formData.address}
                     onChange={(e) => setFormData({...formData, address: e.target.value})}
@@ -240,7 +339,7 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Chuyên ngành</label>
-                <input
+                <Input
                     type="text"
                     value={formData.specialization}
                     onChange={(e) => setFormData({...formData, specialization: e.target.value})}
@@ -258,9 +357,17 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
                     <option value="admin">Quản trị viên</option>
                 </select>
             </div>
-            <div className="flex justify-end space-x-3 mt-6">
+            <div className="flex justify-end space-x-3 mt-6 gap-2">
                 <button
                     type="button"
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        fontWeight: '500',
+                        fontStyle: 'normal',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}
                     onClick={onCancel}
                     className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 >
@@ -268,6 +375,14 @@ function UserCreateForm({ onSave, onCancel }: UserCreateFormProps) {
                 </button>
                 <button
                     type="submit"
+                     style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        fontWeight: '500',
+                        fontStyle: 'normal',
+                        border: 'none',
+                        borderRadius: '5px'
+                    }}
                     disabled={loading}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
@@ -376,11 +491,31 @@ export default function UsersManagement() {
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Người Dùng</h1>
-                        <p className="text-gray-600">Quản lý thông tin người dùng trong hệ thống</p>
+                        <h1 className="text-2xl font-bold text-gray-900"
+                        style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '20px',
+                            fontWeight: '500',
+                            fontStyle: 'normal'
+                        }}
+                        >Quản Lý Người Dùng</h1>
+                        <p className="text-gray-600"  style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '18px',
+                            fontWeight: '400',
+                            fontStyle: 'italic'
+                        }}>Quản lý thông tin người dùng trong hệ thống</p>
                     </div>
                     <button
                         onClick={() => openModal('create')}
+                         style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '16px',
+                            fontWeight: '500',
+                            fontStyle: 'normal',
+                            border: 'none',
+                            borderRadius: '10px'
+                        }}
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
                     >
                         <FaPlus size={16} />
@@ -401,7 +536,12 @@ export default function UsersManagement() {
                                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 />
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-500" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                 Tổng: {filteredUsers.length} người dùng
                             </div>
                         </div>
@@ -411,22 +551,54 @@ export default function UsersManagement() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}
+                                    >
                                         Người dùng
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                         Liên hệ
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                         Chuyên ngành
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                         Vai trò
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                         Ngày tạo
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                         Thao tác
                                     </th>
                                 </tr>
@@ -436,27 +608,64 @@ export default function UsersManagement() {
                                     <tr key={userData._id} className="hover:bg-gray-50">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div>
-                                                <div className="text-sm font-medium text-gray-900">{userData.fullname}</div>
-                                                <div className="text-sm text-gray-500">{userData.email}</div>
+                                                <div className="text-sm font-medium text-gray-900" 
+                                                style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}
+                                                >{userData.fullname}</div>
+                                                <div className="text-sm text-gray-500" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '400',
+                                fontStyle: 'normal'
+                            }}>{userData.email}</div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{userData.phone || 'N/A'}</div>
-                                            <div className="text-sm text-gray-500">{userData.address || 'N/A'}</div>
+                                            <div className="text-sm text-gray-900" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>{userData.phone || 'N/A'}</div>
+                                            <div className="text-sm text-gray-500" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '400',
+                                fontStyle: 'normal'
+                            }}>{userData.address || 'N/A'}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{userData.specialization || 'N/A'}</div>
+                                            <div className="text-sm text-gray-900" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>{userData.specialization || 'N/A'}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                                                 userData.role === 'admin' 
                                                     ? 'bg-red-100 text-red-800' 
                                                     : 'bg-green-100 text-green-800'
-                                            }`}>
+                                            }`} style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                                 {userData.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                fontStyle: 'normal'
+                            }}>
                                             {new Date(userData.createdAt).toLocaleDateString('vi-VN')}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -495,7 +704,12 @@ export default function UsersManagement() {
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                        <h3 className="text-lg font-semibold mb-4">
+                        <h3 className="text-lg font-semibold mb-4" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '20px',
+                            fontWeight: '500',
+                            fontStyle: 'normal'
+                        }}>
                             {modalMode === 'view' && 'Chi Tiết Người Dùng'}
                             {modalMode === 'edit' && 'Chỉnh Sửa Người Dùng'}
                             {modalMode === 'create' && 'Thêm Người Dùng Mới'}
@@ -504,28 +718,112 @@ export default function UsersManagement() {
                         {selectedUser && modalMode === 'view' && (
                             <div className="space-y-3">
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Họ tên:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.fullname}</p>
+                                    <label className="text-sm font-medium text-gray-700" 
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Họ tên:</label>
+                                    <p className="text-sm text-gray-900" 
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.fullname}</p>
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Email:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.email}</p>
+                                    <label className="text-sm font-medium text-gray-700" 
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Email:</label>
+                                    <p className="text-sm text-gray-900" 
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.email}</p>
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Số điện thoại:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.phone || 'N/A'}</p>
+                                    <label className="text-sm font-medium text-gray-700" 
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Số điện thoại:</label>
+                                    <p className="text-sm text-gray-900" 
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.phone || 'N/A'}</p>
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Địa chỉ:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.address || 'N/A'}</p>
+                                    <label className="text-sm font-medium text-gray-700" 
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Địa chỉ:</label>
+                                    <p className="text-sm text-gray-900"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.address || 'N/A'}</p>
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Chuyên ngành:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.specialization || 'N/A'}</p>
+                                    <label className="text-sm font-medium text-gray-700" 
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Chuyên ngành:</label>
+                                    <p className="text-sm text-gray-900"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.specialization || 'N/A'}</p>
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-gray-700">Vai trò:</label>
-                                    <p className="text-sm text-gray-900">{selectedUser.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}</p>
+                                    <label className="text-sm font-medium text-gray-700"
+                                     style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '500',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >Vai trò:</label>
+                                    <p className="text-sm text-gray-900"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '14px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal'
+                                    }}
+                                    >{selectedUser.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}</p>
                                 </div>
                             </div>
                         )}
@@ -556,6 +854,14 @@ export default function UsersManagement() {
                         {modalMode === 'view' && (
                             <div className="flex justify-end space-x-3 mt-6">
                                 <button
+                                style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        fontWeight: '400',
+                                        fontStyle: 'normal',
+                                        border: 'none',
+                                        borderRadius: '10px'
+                                    }}
                                     onClick={() => setIsModalOpen(false)}
                                     className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                                 >

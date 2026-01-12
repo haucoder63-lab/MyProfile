@@ -126,8 +126,18 @@ export default function ContactManagement() {
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Liên Hệ</h1>
-                        <p className="text-gray-600">Quản lý thông tin liên hệ trong hệ thống</p>
+                        <h1 className="text-2xl font-bold text-gray-900" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '28px',
+                            fontWeight: '700',
+                            fontStyle: 'normal'
+                        }}>Quản Lý Liên Hệ</h1>
+                        <p className="text-gray-600" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '16px',
+                            fontWeight: '400',
+                            fontStyle: 'normal'
+                        }}>Quản lý thông tin liên hệ trong hệ thống</p>
                     </div>
                     <button
                         onClick={() => openModal('create')}

@@ -138,12 +138,28 @@ export default function SkillsManagement() {
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Kỹ Năng</h1>
-                        <p className="text-gray-600">Quản lý thông tin kỹ năng trong hệ thống</p>
+                        <h1 className="text-2xl font-bold text-gray-900" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '28px',
+                            fontWeight: '700',
+                            fontStyle: 'normal'
+                        }}>Quản Lý Kỹ Năng</h1>
+                        <p className="text-gray-600" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '16px',
+                            fontWeight: '400',
+                            fontStyle: 'normal'
+                        }}>Quản lý thông tin kỹ năng trong hệ thống</p>
                     </div>
                     <button
                         onClick={() => openModal('create')}
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                        style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '15px',
+                            fontWeight: '500',
+                            fontStyle: 'normal'
+                        }}
                     >
                         <FaPlus size={16} />
                         <span>Thêm Danh Mục Kỹ Năng</span>

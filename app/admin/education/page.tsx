@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 interface Education {
     _id: string;
-    user_id: {
+    user_id?: {
         _id: string;
         fullname: string;
         email: string;
@@ -21,9 +21,9 @@ interface Education {
     end_date?: string;
     grade?: string;
     description?: string;
-    achievements: string[];
-    certificates: string[];
-    activities: string[];
+    achievements: (string | any)[];
+    certificates: (string | any)[];
+    activities: (string | any)[];
     createdAt: string;
 }
 
@@ -90,10 +90,10 @@ export default function EducationManagement() {
     };
 
     const filteredEducations = educations.filter(education =>
-        education.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        education.degree.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        education.field_of_study.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        education.user_id.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+        (education.school && education.school.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (education.degree && education.degree.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (education.field_of_study && education.field_of_study.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (education.user_id?.fullname && education.user_id.fullname.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     if (loading || dataLoading) {
@@ -126,8 +126,18 @@ export default function EducationManagement() {
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Học Vấn</h1>
-                        <p className="text-gray-600">Quản lý thông tin học vấn trong hệ thống</p>
+                        <h1 className="text-2xl font-bold text-gray-900" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '28px',
+                            fontWeight: '700',
+                            fontStyle: 'normal'
+                        }}>Quản Lý Học Vấn</h1>
+                        <p className="text-gray-600" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '16px',
+                            fontWeight: '400',
+                            fontStyle: 'normal'
+                        }}>Quản lý thông tin học vấn trong hệ thống</p>
                     </div>
                     <button
                         onClick={() => openModal('create')}
@@ -165,7 +175,7 @@ export default function EducationManagement() {
                                         <FaGraduationCap className="text-blue-600" size={20} />
                                         <div>
                                             <h3 className="text-lg font-semibold text-gray-900">{education.school}</h3>
-                                            <p className="text-sm text-gray-500">{education.user_id.fullname}</p>
+                                            <p className="text-sm text-gray-500">{education.user_id?.fullname || 'N/A'}</p>
                                         </div>
                                     </div>
                                     <div className="flex space-x-1">
@@ -288,7 +298,9 @@ export default function EducationManagement() {
                                     <label className="text-sm font-medium text-gray-700 mb-2 block">Thành tích:</label>
                                     <ul className="list-disc list-inside space-y-1">
                                         {selectedEducation.achievements.map((achievement, index) => (
-                                            <li key={index} className="text-sm text-gray-900">{achievement}</li>
+                                            <li key={index} className="text-sm text-gray-900">
+                                                {typeof achievement === 'string' ? achievement : achievement.title || achievement.description || JSON.stringify(achievement)}
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>
@@ -299,7 +311,9 @@ export default function EducationManagement() {
                                     <label className="text-sm font-medium text-gray-700 mb-2 block">Chứng chỉ:</label>
                                     <ul className="list-disc list-inside space-y-1">
                                         {selectedEducation.certificates.map((certificate, index) => (
-                                            <li key={index} className="text-sm text-gray-900">{certificate}</li>
+                                            <li key={index} className="text-sm text-gray-900">
+                                                {typeof certificate === 'string' ? certificate : certificate.title || certificate.description || JSON.stringify(certificate)}
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>
@@ -310,7 +324,9 @@ export default function EducationManagement() {
                                     <label className="text-sm font-medium text-gray-700 mb-2 block">Hoạt động:</label>
                                     <ul className="list-disc list-inside space-y-1">
                                         {selectedEducation.activities.map((activity, index) => (
-                                            <li key={index} className="text-sm text-gray-900">{activity}</li>
+                                            <li key={index} className="text-sm text-gray-900">
+                                                {typeof activity === 'string' ? activity : activity.title || activity.description || JSON.stringify(activity)}
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>

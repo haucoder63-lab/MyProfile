@@ -99,8 +99,18 @@ export default function AdminDashboard() {
         <AdminLayout>
             <div className="space-y-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Bảng Điều Khiển</h1>
-                    <p className="text-gray-600">Chào mừng trở lại, {user?.fullname}!</p>
+                    <h1 className="text-2xl font-bold text-gray-900" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '28px',
+                        fontWeight: '700',
+                        fontStyle: 'normal'
+                    }}>Bảng Điều Khiển</h1>
+                    <p className="text-gray-600" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        fontWeight: '400',
+                        fontStyle: 'normal'
+                    }}>Chào mừng trở lại, {user?.fullname}!</p>
                 </div>
 
                 <DashboardStats />

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaBirthdayCake, FaGraduationCap } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaBirthdayCake, FaGraduationCap, FaUserShield } from "react-icons/fa";
 
 interface UserProfile {
     _id: string;
@@ -12,6 +12,7 @@ interface UserProfile {
     phone: string;
     address: string;
     specialization: string;
+    role: string;
     avatar_url: string;
     createdAt: string;
 }
@@ -69,7 +70,7 @@ export default function Profile() {
             <div className="max-w-4xl mx-auto p-6">
                 <div className="bg-white rounded-lg shadow-lg p-8 text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">Chưa có thông tin hồ sơ</h2>
-                    <p className="text-gray-600">Vui lòng thêm thông tin cá nhân để hiển thị hồ sơ.</p>
+                    <p className="text-gray-600">Thông tin hồ sơ sẽ được cập nhật sớm.</p>
                 </div>
             </div>
         );
@@ -111,7 +112,7 @@ export default function Profile() {
                                 }}
                                 >{profile.fullname}</h3>
                                 {profile.specialization && (
-                                    <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-full border border-blue-100 transition-all duration-300 hover:bg-blue-100">
+                                    <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-full border border-blue-100 transition-all duration-300 hover:bg-blue-100 mb-2">
                                         <FaGraduationCap className="text-blue-500 mr-2" size={30} />
                                         <p className="text-blue-700 font-medium"
                                         style={{

@@ -35,6 +35,7 @@ export default function Projects() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchProjects();
@@ -80,6 +81,8 @@ export default function Projects() {
             if (error.name === 'AbortError') {
                 console.error('Request timed out');
             }
+        } finally {
+            setLoading(false);
         }
     };
 

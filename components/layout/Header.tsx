@@ -4,17 +4,34 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUser, FaSignOutAlt, FaUserShield } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter();
+    const { user, logout, isAuthenticated } = useAuth();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Searching for:", searchQuery);
         setIsSearchOpen(false);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            toast.success('Đăng xuất thành công!');
+            setIsUserMenuOpen(false);
+            router.push('/');
+        } catch (error) {
+            toast.error('Có lỗi xảy ra khi đăng xuất');
+        }
     };
 
     return (
@@ -50,10 +67,66 @@ export default function Header() {
                     <div className="hidden md:flex items-center space-x-4 relative">
                         <Button
                             onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="p-2 bg-transparent text-gray-600 hover:text-blue-600 transition-colors"
+                            className="p-2 text-gray-600 hover:text-blue-600 transition-colors bg-transparent"
                         >
                             <FaSearch size={18} />
                         </Button>
+
+                        {isAuthenticated ? (
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                    className="flex items-center space-x-2 p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                                >
+                                    {user?.role === 'admin' ? (
+                                        <FaUserShield size={18} />
+                                    ) : (
+                                        <FaUser size={18} />
+                                    )}
+                                    <span className="text-sm font-medium">{user?.fullname}</span>
+                                </button>
+
+                                {isUserMenuOpen && (
+                                    <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                                        <div className="p-4 border-b border-gray-100">
+                                            <p className="text-sm font-medium text-gray-900">{user?.fullname}</p>
+                                            <p className="text-xs text-gray-500">{user?.email}</p>
+                                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
+                                                user?.role === 'admin' 
+                                                    ? 'bg-red-100 text-red-800' 
+                                                    : 'bg-green-100 text-green-800'
+                                            }`}>
+                                                {user?.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}
+                                            </span>
+                                        </div>
+                                        <div className="p-2">
+                                            <Link
+                                                href="/profile"
+                                                className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                                                onClick={() => setIsUserMenuOpen(false)}
+                                            >
+                                                <FaUser className="mr-2" size={14} />
+                                                Hồ sơ cá nhân
+                                            </Link>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="w-full flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                            >
+                                                <FaSignOutAlt className="mr-2" size={14} />
+                                                Đăng xuất
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <Link
+                                href="/login"
+                                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors bg-transparent"
+                            >
+                                <FaUser size={16} color="black" />
+                            </Link>
+                        )}
                         
                         {isSearchOpen && (
                             <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
@@ -69,7 +142,7 @@ export default function Header() {
                                         />
                                         <Button
                                             type="submit"
-                                            className="absolute bg-transparent right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
+                                            className="bg-transparent absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
                                         >
                                             <FaSearch size={16} />
                                         </Button>
@@ -82,7 +155,7 @@ export default function Header() {
                     <div className="flex items-center space-x-2">
                         <Button
                             onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="md:hidden bg-transparent p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                            className="bg-transparent md:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors"
                         >
                             <FaSearch size={18} />
                         </Button>
@@ -113,6 +186,30 @@ export default function Header() {
                             <Link href="/contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
                                 LIÊN HỆ
                             </Link>
+                            
+                            {isAuthenticated ? (
+                                <div className="border-t border-gray-200 pt-2 mt-2">
+                                    <div className="px-3 py-2">
+                                        <p className="text-sm font-medium text-gray-900">{user?.fullname}</p>
+                                        <p className="text-xs text-gray-500">{user?.email}</p>
+                                    </div>
+                                    <Link href="/profile" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-md transition-colors no-underline">
+                                        Hồ sơ cá nhân
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left block px-3 py-2 text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+                                    >
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="border-t border-gray-200 pt-2 mt-2">
+                                    <Link href="/login" className="block px-3 py-2 text-base font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors no-underline">
+                                        Đăng nhập
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
@@ -129,12 +226,12 @@ export default function Header() {
                                     className="w-full px-4 py-2 pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     autoFocus
                                 />
-                                <Button
-                                    type="submit"
-                                    className="absolute bg-transparent right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
-                                >
-                                    <FaSearch size={16} />
-                                </Button>
+                                        <Button
+                                            type="submit"
+                                            className="bg-transparent absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
+                                        >
+                                            <FaSearch size={16} />
+                                        </Button>
                             </form>
                         </div>
                     </div>
